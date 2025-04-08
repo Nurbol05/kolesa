@@ -1,23 +1,43 @@
 package routes
 
 import (
-	"github.com/gorilla/mux"
+	"kolesa/car"
+	"kolesa/category"
+	"kolesa/user"
 
-	"kolesa/auth"
-	"kolesa/middleware"
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
-func SetupRoutes(
-	authService *auth.AuthService,
-) *mux.Router {
-	r := mux.NewRouter()
+func SetupRoutes(r *gin.Engine, db *gorm.DB) {
+	var carRepo car.CarRepository = car.NewCarRepository(db)
+	carService := car.NewCarService(carRepo)
+	carHandler := car.NewCarHandler(carService)
 
-	r.Use(middleware.LoggingMiddleware)
+	cars := r.Group("api/v1/cars")
+	{
+		cars.GET("/", carHandler.GetAll)       // Get all cars
+		cars.GET("/:id", carHandler.GetByID)   // Get car by ID
+		cars.POST("/", carHandler.Create)      // Create new car
+		cars.PUT("/:id", carHandler.Update)    // Update car
+		cars.DELETE("/:id", carHandler.Delete) // Delete car
+	}
 
-	r.Use(middleware.AuthMiddleware)
+	var userRepo user.UserRepository = user.NewUserRepository(db)
+	authService := user.NewUserService(userRepo)
+	authHandler := user.NewUserHandler(authService)
 
-	r.HandleFunc("/register", auth.RegisterHandler(authService)).Methods("POST")
-	r.HandleFunc("/login", auth.LoginHandler(authService)).Methods("POST")
+	auth := r.Group("api/v1/user")
+	{
+		auth.POST("/register", authHandler.Register) // Register user
+		auth.POST("/login", authHandler.Login)       // Login user
+	}
 
-	return r
+	var categoryRepo category.CategoryRepository = category.NewCategoryRepository(db)
+	categoryService := category.NewCategoryService(categoryRepo)
+	categoryHandler := category.NewCategoryHandler(categoryService)
+
+	cats := r.Group("api/v1/categories")
+	cats.GET("/", categoryHandler.GetAll)
+	cats.POST("/", categoryHandler.Create)
 }

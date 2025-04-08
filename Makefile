@@ -1,7 +1,7 @@
 DB_URL=postgres://postgres:postgres@localhost:5432/kolesa?sslmode=disable
 
 MIGRATIONS_DIR=migrations
-NAME=shema_setup
+NAME=add_car_category
 VERSION=1
 
 .PHONY: up down force goto version create install-migrate
@@ -36,7 +36,7 @@ create:
 
 # Используй migrate force, чтобы сбросить dirty-флаг
 migrate-force:
-	migrate -path db/migrations -database $(DB_URL) force $(VERSION)
+	migrate -path $(MIGRATIONS_DIR) -database $(DB_URL) force $(VERSION)
 
 # Убедись, что migrate установлен
 install-migrate:

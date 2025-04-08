@@ -1,4 +1,4 @@
-package auth
+package user
 
 import (
 	"errors"
@@ -15,15 +15,20 @@ func init() {
 	jwtKey = []byte(os.Getenv("JWT_SECRET"))
 }
 
-type AuthService struct {
-	userRepo *UserRepository
+type UserRepository interface {
+	CreateUser(username, email, passwordHash string) error
+	FindUserByEmail(email string) (int, string, error)
 }
 
-func NewAuthService(userRepo *UserRepository) *AuthService {
-	return &AuthService{userRepo: userRepo}
+type UserService struct {
+	userRepo UserRepository
 }
 
-func (s *AuthService) Register(username, email, password string) error {
+func NewUserService(userRepo UserRepository) *UserService {
+	return &UserService{userRepo: userRepo}
+}
+
+func (s *UserService) Register(username, email, password string) error {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		return err
@@ -32,7 +37,7 @@ func (s *AuthService) Register(username, email, password string) error {
 	return s.userRepo.CreateUser(username, email, string(hashedPassword))
 }
 
-func (s *AuthService) Login(email, password string) (string, error) {
+func (s *UserService) Login(email, password string) (string, error) {
 	userID, hashedPassword, err := s.userRepo.FindUserByEmail(email)
 	if err != nil {
 		return "", errors.New("invalid credentials")

@@ -5,24 +5,32 @@ import (
 	"net/http"
 )
 
-var categories []Category
-var categoryID = 1
-
-func GetCategories(c *gin.Context) {
-	c.JSON(http.StatusOK, categories)
+type CategoryHandler struct {
+	service *CategoryService
 }
 
-func CreateCategory(c *gin.Context) {
-	var category Category
+func NewCategoryHandler(service *CategoryService) *CategoryHandler {
+	return &CategoryHandler{service}
+}
 
+func (h *CategoryHandler) Create(c *gin.Context) {
+	var category Category
 	if err := c.ShouldBindJSON(&category); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	category.ID = categoryID
-	categoryID++
-	categories = append(categories, category)
-
+	if err := h.service.Create(&category); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create category"})
+		return
+	}
 	c.JSON(http.StatusCreated, category)
+}
+
+func (h *CategoryHandler) GetAll(c *gin.Context) {
+	categories, err := h.service.GetAll()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch categories"})
+		return
+	}
+	c.JSON(http.StatusOK, categories)
 }
