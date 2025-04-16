@@ -17,10 +17,24 @@ func (r CarRepositoryImpl) Create(car *Car) error {
 	return r.db.Create(car).Error
 }
 
-func (r CarRepositoryImpl) GetAll() ([]Car, error) {
+func (r CarRepositoryImpl) GetAll(params GetCarsParams) ([]Car, error) {
 	var cars []Car
-	err := r.db.Find(&cars).Error
-	return cars, err
+	query := r.db.Model(&Car{})
+
+	// Фильтр қолдану (мысалы, бренд)
+	if params.Filter != "" {
+		query = query.Where("brand ILIKE ?", "%"+params.Filter+"%")
+	}
+
+	// Пагинация
+	offset := (params.Page - 1) * params.Limit
+	err := query.Limit(params.Limit).Offset(offset).Find(&cars).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return cars, nil
 }
 
 func (r CarRepositoryImpl) GetByID(id int) (*Car, error) {

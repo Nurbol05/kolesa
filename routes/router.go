@@ -40,4 +40,7 @@ func SetupRoutes(r *gin.Engine, db *gorm.DB) {
 	cats := r.Group("api/v1/categories")
 	cats.GET("/", categoryHandler.GetAll)
 	cats.POST("/", categoryHandler.Create)
+	cats.PUT("/:id", categoryHandler.Update)
+	cats.DELETE("/:id", categoryHandler.Delete)
+
 }

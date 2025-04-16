@@ -28,11 +28,22 @@ func (h *CarHandler) Create(c *gin.Context) {
 }
 
 func (h *CarHandler) GetAll(c *gin.Context) {
-	cars, err := h.service.GetAll()
+	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "5"))
+	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
+	filter := c.Query("filter")
+
+	params := GetCarsParams{
+		Limit:  limit,
+		Page:   page,
+		Filter: filter,
+	}
+
+	cars, err := h.service.GetAll(params)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch cars"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+
 	c.JSON(http.StatusOK, cars)
 }
 

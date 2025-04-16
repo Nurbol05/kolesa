@@ -2,10 +2,16 @@ package car
 
 type CarRepository interface {
 	Create(car *Car) error
-	GetAll() ([]Car, error)
+	GetAll(params GetCarsParams) ([]Car, error) // жаңартылды
 	GetByID(id int) (*Car, error)
 	Update(car *Car) error
 	Delete(id int) error
+}
+
+type GetCarsParams struct {
+	Limit  int
+	Page   int
+	Filter string
 }
 
 type CarService struct {
@@ -20,8 +26,8 @@ func (s *CarService) Create(car *Car) error {
 	return s.repo.Create(car)
 }
 
-func (s *CarService) GetAll() ([]Car, error) {
-	return s.repo.GetAll()
+func (s *CarService) GetAll(params GetCarsParams) ([]Car, error) {
+	return s.repo.GetAll(params)
 }
 
 func (s *CarService) GetByID(id int) (*Car, error) {

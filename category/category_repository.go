@@ -21,3 +21,11 @@ func (r CategoryRepositoryImpl) GetAll() ([]Category, error) {
 	err := r.db.Find(&categories).Error
 	return categories, err
 }
+
+func (r CategoryRepositoryImpl) Update(id int, newName string) error {
+	return r.db.Model(&Category{}).Where("id = ?", id).Update("name", newName).Error
+}
+
+func (r CategoryRepositoryImpl) Delete(id int) error {
+	return r.db.Delete(&Category{}, id).Error
+}
