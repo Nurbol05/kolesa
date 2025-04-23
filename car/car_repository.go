@@ -8,11 +8,10 @@ type CarRepositoryImpl struct {
 	db *gorm.DB
 }
 
-func NewCarRepository(db *gorm.DB) *CarRepositoryImpl {
+func NewCarRepository(db *gorm.DB) CarRepository {
 	return &CarRepositoryImpl{db}
 }
 
-// Используем структуру Car из car.go
 func (r CarRepositoryImpl) Create(car *Car) error {
 	return r.db.Create(car).Error
 }
@@ -21,7 +20,6 @@ func (r CarRepositoryImpl) GetAll(params GetCarsParams) ([]Car, error) {
 	var cars []Car
 	query := r.db.Model(&Car{})
 
-	// Фильтр қолдану (мысалы, бренд)
 	if params.Filter != "" {
 		query = query.Where("brand ILIKE ?", "%"+params.Filter+"%")
 	}

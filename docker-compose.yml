@@ -6,9 +6,10 @@ services:
     container_name: kolesa_postgres
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: kolesa
+      DB_HOST: "localhost"
+      DB_USER: "postgres"
+      DB_PASSWORD: "postgres"
+      DB_NAME: "kolesa"
     ports:
       - "5432:5432"
     volumes:

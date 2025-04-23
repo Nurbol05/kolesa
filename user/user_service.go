@@ -18,6 +18,9 @@ func init() {
 type UserRepository interface {
 	CreateUser(username, email, passwordHash string) error
 	FindUserByEmail(email string) (int, string, error)
+	FindUserByID(id int) (*User, error)
+	UpdateUser(user *User) error
+	DeleteUser(id int) error
 }
 
 type UserService struct {
@@ -58,4 +61,20 @@ func (s *UserService) Login(email, password string) (string, error) {
 	}
 
 	return tokenString, nil
+}
+
+func (s *UserService) UpdateUser(id int, username, email string) error {
+	user, err := s.userRepo.FindUserByID(id)
+	if err != nil {
+		return err
+	}
+
+	user.Username = username
+	user.Email = email
+
+	return s.userRepo.UpdateUser(user)
+}
+
+func (s *UserService) DeleteUser(id int) error {
+	return s.userRepo.DeleteUser(id)
 }

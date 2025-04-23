@@ -34,3 +34,25 @@ func (r UserRepositoryImpl) FindUserByEmail(email string) (int, string, error) {
 	}
 	return int(user.ID), user.PasswordHash, nil
 }
+
+// FindUserByID returns a user by ID
+func (r UserRepositoryImpl) FindUserByID(id int) (*User, error) {
+	var user User
+	if err := r.db.First(&user, id).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, errors.New("user not found")
+		}
+		return nil, err
+	}
+	return &user, nil
+}
+
+// UpdateUser updates an existing user's information in the database
+func (r UserRepositoryImpl) UpdateUser(user *User) error {
+	return r.db.Save(user).Error
+}
+
+// DeleteUser deletes a user by ID
+func (r UserRepositoryImpl) DeleteUser(id int) error {
+	return r.db.Delete(&User{}, id).Error
+}

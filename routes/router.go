@@ -31,6 +31,8 @@ func SetupRoutes(r *gin.Engine, db *gorm.DB) {
 	{
 		auth.POST("/register", authHandler.Register) // Register user
 		auth.POST("/login", authHandler.Login)       // Login user
+		auth.PUT("/users/update", authHandler.UpdateUser)
+		auth.DELETE("/users/delete/:id", authHandler.DeleteUser)
 	}
 
 	var categoryRepo category.CategoryRepository = category.NewCategoryRepository(db)
@@ -38,9 +40,11 @@ func SetupRoutes(r *gin.Engine, db *gorm.DB) {
 	categoryHandler := category.NewCategoryHandler(categoryService)
 
 	cats := r.Group("api/v1/categories")
-	cats.GET("/", categoryHandler.GetAll)
-	cats.POST("/", categoryHandler.Create)
-	cats.PUT("/:id", categoryHandler.Update)
-	cats.DELETE("/:id", categoryHandler.Delete)
-
+	{
+		cats.GET("/", categoryHandler.GetAll)
+		cats.POST("/", categoryHandler.Create)
+		cats.PUT("/:id", categoryHandler.Update)
+		cats.DELETE("/:id", categoryHandler.Delete)
+		cats.GET("/:id/cars", categoryHandler.GetCarsByCategory)
+	}
 }

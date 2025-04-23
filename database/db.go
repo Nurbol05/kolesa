@@ -8,13 +8,16 @@ import (
 	"os"
 )
 
-// ConnectPostgres подключается к PostgreSQL и возвращает экземпляр *gorm.DB
+var DB *gorm.DB
+
 func ConnectPostgres() (*gorm.DB, error) {
 	// Формируем строку подключения
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
-		os.Getenv("DB_HOST"), os.Getenv("DB_USER"),
-		os.Getenv("DB_PASSWORD"), os.Getenv("DB_NAME"),
-		os.Getenv("DB_PORT"))
+		getEnv("DB_HOST", "localhost"),
+		getEnv("DB_USER", "postgres"),
+		getEnv("DB_PASSWORD", "postgres"),
+		getEnv("DB_NAME", "kolesa"),
+		getEnv("DB_PORT", "5432"))
 
 	// Подключаемся к базе данных через GORM и pgx
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
@@ -34,5 +37,15 @@ func ConnectPostgres() (*gorm.DB, error) {
 	}
 
 	logger.Log.Info("Connected to PostgreSQL")
+	DB = db
 	return db, nil
+}
+
+// Функция для получения переменной окружения с дефолтным значением
+func getEnv(key, defaultValue string) string {
+	value := os.Getenv(key)
+	if value == "" {
+		return defaultValue
+	}
+	return value
 }

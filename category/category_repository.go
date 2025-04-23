@@ -2,6 +2,7 @@ package category
 
 import (
 	"gorm.io/gorm"
+	"kolesa/car"
 )
 
 type CategoryRepositoryImpl struct {
@@ -28,4 +29,10 @@ func (r CategoryRepositoryImpl) Update(id int, newName string) error {
 
 func (r CategoryRepositoryImpl) Delete(id int) error {
 	return r.db.Delete(&Category{}, id).Error
+}
+
+func (r CategoryRepositoryImpl) GetCarsByCategoryID(categoryID int) ([]car.Car, error) {
+	var cars []car.Car
+	err := r.db.Where("category_id = ?", categoryID).Find(&cars).Error
+	return cars, err
 }

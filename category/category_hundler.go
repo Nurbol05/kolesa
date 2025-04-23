@@ -76,3 +76,20 @@ func (h *CategoryHandler) Delete(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": "Category deleted successfully"})
 }
+
+func (h *CategoryHandler) GetCarsByCategory(c *gin.Context) {
+	idParam := c.Param("id")
+	var id int
+	if _, err := fmt.Sscanf(idParam, "%d", &id); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid category ID"})
+		return
+	}
+
+	cars, err := h.service.GetCarsByCategoryID(id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not fetch cars by category"})
+		return
+	}
+
+	c.JSON(http.StatusOK, cars)
+}
