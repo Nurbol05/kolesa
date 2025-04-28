@@ -8,7 +8,7 @@ type CarRepositoryImpl struct {
 	db *gorm.DB
 }
 
-func NewCarRepository(db *gorm.DB) CarRepository {
+func NewCarRepository(db *gorm.DB) *CarRepositoryImpl {
 	return &CarRepositoryImpl{db}
 }
 
