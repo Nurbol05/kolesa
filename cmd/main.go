@@ -22,6 +22,11 @@ func main() {
 		logger.Log.Fatalf("Failed to connect to the database: %v", err)
 	}
 
+	db, err = database.ConnectPostgresTest()
+	if err != nil {
+		logger.Log.Fatalf("Failed to connect to the database: %v", err)
+	}
+
 	r := gin.Default()
 	routes.SetupRoutes(r, db)
 

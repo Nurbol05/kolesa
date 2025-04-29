@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/golang-jwt/jwt/v4"
 	"golang.org/x/crypto/bcrypt"
+	"kolesa/models"
 	"os"
 	"time"
 )
@@ -18,8 +19,9 @@ func init() {
 type UserRepository interface {
 	CreateUser(username, email, passwordHash string) error
 	FindUserByEmail(email string) (int, string, error)
-	FindUserByID(id int) (*User, error)
-	UpdateUser(user *User) error
+	FindUserByID(id int) (*models.User, error)
+	GetAll() ([]models.User, error)
+	UpdateUser(user *models.User) error
 	DeleteUser(id int) error
 }
 
@@ -61,6 +63,10 @@ func (s *UserService) Login(email, password string) (string, error) {
 	}
 
 	return tokenString, nil
+}
+
+func (s *UserService) GetAll() ([]models.User, error) {
+	return s.userRepo.GetAll()
 }
 
 func (s *UserService) UpdateUser(id int, username, email string) error {

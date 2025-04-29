@@ -2,6 +2,7 @@ package car
 
 import (
 	"github.com/gin-gonic/gin"
+	"kolesa/models"
 	"net/http"
 	"strconv"
 )
@@ -15,7 +16,7 @@ func NewCarHandler(service *CarService) *CarHandler {
 }
 
 func (h *CarHandler) Create(c *gin.Context) {
-	var car Car
+	var car models.Car
 	if err := c.ShouldBindJSON(&car); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -59,7 +60,7 @@ func (h *CarHandler) GetByID(c *gin.Context) {
 
 func (h *CarHandler) Update(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
-	var car Car
+	var car models.Car
 	if err := c.ShouldBindJSON(&car); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

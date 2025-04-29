@@ -3,6 +3,7 @@ package category
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"kolesa/models"
 	"net/http"
 )
 
@@ -15,7 +16,7 @@ func NewCategoryHandler(service *CategoryService) *CategoryHandler {
 }
 
 func (h *CategoryHandler) Create(c *gin.Context) {
-	var category Category
+	var category models.Category
 	if err := c.ShouldBindJSON(&category); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

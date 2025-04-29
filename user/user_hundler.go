@@ -54,6 +54,15 @@ func (h *UserHandler) Login(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"token": token})
 }
 
+func (h *UserHandler) GetAll(c *gin.Context) {
+	users, err := h.service.GetAll()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch categories"})
+		return
+	}
+	c.JSON(http.StatusOK, users)
+}
+
 func (h *UserHandler) UpdateUser(c *gin.Context) {
 	var req struct {
 		ID       int    `json:"id"`

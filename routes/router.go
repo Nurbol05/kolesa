@@ -29,8 +29,9 @@ func SetupRoutes(r *gin.Engine, db *gorm.DB) {
 
 	auth := r.Group("api/v1/user")
 	{
-		auth.POST("/register", authHandler.Register) // Register user
-		auth.POST("/login", authHandler.Login)       // Login user
+		auth.POST("/register", authHandler.Register)
+		auth.POST("/login", authHandler.Login)
+		auth.GET("/", authHandler.GetAll)
 		auth.PUT("/users/update", authHandler.UpdateUser)
 		auth.DELETE("/users/delete/:id", authHandler.DeleteUser)
 	}

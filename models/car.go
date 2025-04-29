@@ -1,4 +1,4 @@
-package car
+package models
 
 type Car struct {
 	ID         int    `json:"id"`
