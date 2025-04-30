@@ -1,6 +1,8 @@
 package car
 
-import "kolesa/models"
+import (
+	"kolesa/car-service/models"
+)
 
 type CarRepository interface {
 	Create(car *models.Car) error

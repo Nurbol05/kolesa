@@ -2,7 +2,7 @@ package car
 
 import (
 	"github.com/gin-gonic/gin"
-	"kolesa/models"
+	"kolesa/car-service/models"
 	"net/http"
 	"strconv"
 )

@@ -4,7 +4,7 @@ import (
 	"errors"
 	"github.com/golang-jwt/jwt/v4"
 	"golang.org/x/crypto/bcrypt"
-	"kolesa/models"
+	"kolesa/user-service/models"
 	"os"
 	"time"
 )

@@ -2,7 +2,7 @@ package car
 
 import (
 	"gorm.io/gorm"
-	"kolesa/models"
+	"kolesa/car-service/models"
 )
 
 type CarRepositoryImpl struct {

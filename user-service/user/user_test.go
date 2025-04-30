@@ -2,8 +2,8 @@ package user_test
 
 import (
 	"kolesa/database"
-	"kolesa/models"
-	"kolesa/user"
+	"kolesa/user-service/models"
+	user2 "kolesa/user-service/user"
 	"os"
 	"testing"
 
@@ -11,8 +11,8 @@ import (
 )
 
 var testDB *gorm.DB
-var userRepo user.UserRepository
-var userService *user.UserService
+var userRepo user2.UserRepository
+var userService *user2.UserService
 
 func setupTestDB(t *testing.T) {
 	_ = os.Setenv("DB_USER", "postgres")
@@ -30,8 +30,8 @@ func setupTestDB(t *testing.T) {
 	db.AutoMigrate(&models.User{})
 
 	testDB = db
-	userRepo = user.NewUserRepository(testDB)
-	userService = user.NewUserService(userRepo)
+	userRepo = user2.NewUserRepository(testDB)
+	userService = user2.NewUserService(userRepo)
 }
 
 func TestRegisterAndLogin(t *testing.T) {

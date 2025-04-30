@@ -1,9 +1,9 @@
 package car_test
 
 import (
-	"kolesa/car"
+	car2 "kolesa/car-service/car"
+	"kolesa/car-service/models"
 	"kolesa/database"
-	"kolesa/models"
 	"os"
 	"testing"
 
@@ -11,8 +11,8 @@ import (
 )
 
 var testDB *gorm.DB
-var carRepo car.CarRepository
-var carService *car.CarService
+var carRepo car2.CarRepository
+var carService *car2.CarService
 
 func setupTestDB(t *testing.T) {
 	_ = os.Setenv("DB_USER", "postgres")
@@ -30,8 +30,8 @@ func setupTestDB(t *testing.T) {
 	db.AutoMigrate(&models.Car{})
 
 	testDB = db
-	carRepo = car.NewCarRepository(testDB)
-	carService = car.NewCarService(carRepo)
+	carRepo = car2.NewCarRepository(testDB)
+	carService = car2.NewCarService(carRepo)
 }
 
 func TestCreateCar(t *testing.T) {
@@ -43,7 +43,7 @@ func TestCreateCar(t *testing.T) {
 		t.Fatalf("Create car failed: %v", err)
 	}
 
-	params := car.GetCarsParams{
+	params := car2.GetCarsParams{
 		Limit:  10,
 		Page:   1,
 		Filter: "",
@@ -64,7 +64,7 @@ func TestUpdateCar(t *testing.T) {
 	newCar := models.Car{Brand: "BMW", Model: "X5", Year: 2022}
 	_ = carService.Create(&newCar)
 
-	params := car.GetCarsParams{
+	params := car2.GetCarsParams{
 		Limit:  10,
 		Page:   1,
 		Filter: "",
@@ -94,7 +94,7 @@ func TestDeleteCar(t *testing.T) {
 	newCar := models.Car{Brand: "BMW", Model: "X5", Year: 2022}
 	_ = carService.Create(&newCar)
 
-	params := car.GetCarsParams{
+	params := car2.GetCarsParams{
 		Limit:  10,
 		Page:   1,
 		Filter: "",

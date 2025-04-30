@@ -1,6 +1,7 @@
 package category
 
 import (
+	models2 "kolesa/car-service/models"
 	"kolesa/models"
 )
 
@@ -9,7 +10,7 @@ type CategoryRepository interface {
 	GetAll() ([]models.Category, error)
 	Update(id int, newName string) error
 	Delete(id int) error
-	GetCarsByCategoryID(categoryID int) ([]models.Car, error)
+	GetCarsByCategoryID(categoryID int) ([]models2.Car, error)
 }
 type CategoryService struct {
 	repo CategoryRepository
@@ -35,6 +36,6 @@ func (s *CategoryService) Delete(id int) error {
 	return s.repo.Delete(id)
 }
 
-func (s *CategoryService) GetCarsByCategoryID(categoryID int) ([]models.Car, error) {
+func (s *CategoryService) GetCarsByCategoryID(categoryID int) ([]models2.Car, error) {
 	return s.repo.GetCarsByCategoryID(categoryID)
 }

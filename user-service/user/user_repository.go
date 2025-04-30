@@ -3,7 +3,7 @@ package user
 import (
 	"errors"
 	"gorm.io/gorm"
-	"kolesa/models"
+	"kolesa/user-service/models"
 )
 
 type UserRepositoryImpl struct {

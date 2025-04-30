@@ -7,6 +7,8 @@ toolchain go1.23.5
 require github.com/gin-gonic/gin v1.10.0
 
 require (
+	github.com/go-resty/resty/v2 v2.16.5 // indirect
+	github.com/google/uuid v1.6.0 // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/rogpeppe/go-internal v1.12.0 // indirect
 	github.com/stretchr/objx v0.5.2 // indirect

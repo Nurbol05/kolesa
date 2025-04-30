@@ -2,6 +2,7 @@ package category
 
 import (
 	"gorm.io/gorm"
+	models2 "kolesa/car-service/models"
 	"kolesa/models"
 )
 
@@ -31,8 +32,8 @@ func (r CategoryRepositoryImpl) Delete(id int) error {
 	return r.db.Delete(&models.Category{}, id).Error
 }
 
-func (r CategoryRepositoryImpl) GetCarsByCategoryID(categoryID int) ([]models.Car, error) {
-	var cars []models.Car
+func (r CategoryRepositoryImpl) GetCarsByCategoryID(categoryID int) ([]models2.Car, error) {
+	var cars []models2.Car
 	err := r.db.Where("category_id = ?", categoryID).Find(&cars).Error
 	return cars, err
 }
