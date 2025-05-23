@@ -1,9 +1,9 @@
 package routes
 
 import (
+	"github.com/Nurbol05/kolesa/category"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
-	"kolesa/category"
 )
 
 func SetupRoutes(r *gin.Engine, db *gorm.DB) {

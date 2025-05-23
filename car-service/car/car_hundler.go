@@ -1,8 +1,8 @@
 package car
 
 import (
+	"github.com/Nurbol05/kolesa/shared/models"
 	"github.com/gin-gonic/gin"
-	"kolesa/car-service/models"
 	"net/http"
 	"strconv"
 )

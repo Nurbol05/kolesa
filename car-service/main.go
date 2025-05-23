@@ -2,12 +2,12 @@ package main
 
 import (
 	"fmt"
+	"github.com/Nurbol05/kolesa/car-service/car"
+	"github.com/Nurbol05/kolesa/car-service/logging"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"kolesa/car-service/car"
-	"kolesa/car-service/logging"
 	"log"
 	"os"
 )

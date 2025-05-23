@@ -2,8 +2,8 @@ package carclient
 
 import (
 	"fmt"
+	"github.com/Nurbol05/kolesa/user-service/models"
 	"github.com/go-resty/resty/v2"
-	"kolesa/user-service/models"
 )
 
 type Client struct {

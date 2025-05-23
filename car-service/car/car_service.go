@@ -1,7 +1,7 @@
 package car
 
 import (
-	"kolesa/car-service/models"
+	"github.com/Nurbol05/kolesa/shared/models"
 )
 
 type CarRepository interface {

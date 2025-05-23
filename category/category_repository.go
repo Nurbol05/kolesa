@@ -1,9 +1,8 @@
 package category
 
 import (
+	models2 "github.com/Nurbol05/kolesa/shared/models"
 	"gorm.io/gorm"
-	models2 "kolesa/car-service/models"
-	"kolesa/models"
 )
 
 type CategoryRepositoryImpl struct {
@@ -14,22 +13,22 @@ func NewCategoryRepository(db *gorm.DB) *CategoryRepositoryImpl {
 	return &CategoryRepositoryImpl{db}
 }
 
-func (r CategoryRepositoryImpl) Create(category *models.Category) error {
+func (r CategoryRepositoryImpl) Create(category *models2.Category) error {
 	return r.db.Create(category).Error
 }
 
-func (r CategoryRepositoryImpl) GetAll() ([]models.Category, error) {
-	var categories []models.Category
+func (r CategoryRepositoryImpl) GetAll() ([]models2.Category, error) {
+	var categories []models2.Category
 	err := r.db.Find(&categories).Error
 	return categories, err
 }
 
 func (r CategoryRepositoryImpl) Update(id int, newName string) error {
-	return r.db.Model(&models.Category{}).Where("id = ?", id).Update("name", newName).Error
+	return r.db.Model(&models2.Category{}).Where("id = ?", id).Update("name", newName).Error
 }
 
 func (r CategoryRepositoryImpl) Delete(id int) error {
-	return r.db.Delete(&models.Category{}, id).Error
+	return r.db.Delete(&models2.Category{}, id).Error
 }
 
 func (r CategoryRepositoryImpl) GetCarsByCategoryID(categoryID int) ([]models2.Car, error) {

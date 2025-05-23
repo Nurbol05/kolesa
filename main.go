@@ -1,11 +1,11 @@
 package main
 
 import (
+	"github.com/Nurbol05/kolesa/database"
+	"github.com/Nurbol05/kolesa/pkg/logger"
+	"github.com/Nurbol05/kolesa/routes"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"kolesa/database"
-	"kolesa/pkg/logger"
-	"kolesa/routes"
 )
 
 func main() {

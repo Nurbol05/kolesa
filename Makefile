@@ -1,3 +1,4 @@
+#DB_URL=postgres://postgres:postgres@localhost:5433/kolesa_test?sslmode=disable
 DB_URL=postgres://postgres:postgres@localhost:5432/kolesa?sslmode=disable
 
 MIGRATIONS_DIR=migrations

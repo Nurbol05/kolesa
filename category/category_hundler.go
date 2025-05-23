@@ -2,8 +2,8 @@ package category
 
 import (
 	"fmt"
+	"github.com/Nurbol05/kolesa/shared/models"
 	"github.com/gin-gonic/gin"
-	"kolesa/models"
 	"net/http"
 )
 

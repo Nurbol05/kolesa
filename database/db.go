@@ -2,9 +2,9 @@ package database
 
 import (
 	"fmt"
+	"github.com/Nurbol05/kolesa/pkg/logger"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"kolesa/pkg/logger"
 	"os"
 )
 
@@ -17,7 +17,7 @@ func ConnectPostgres() (*gorm.DB, error) {
 		os.Getenv("DB_USER"),     // user
 		os.Getenv("DB_PASSWORD"), // password
 		os.Getenv("DB_NAME"),     // dbname
-		os.Getenv("DB_PORT")) // port
+		os.Getenv("DB_PORT"))     // port
 
 	// Подключаемся к базе данных через GORM и pgx
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})

@@ -1,13 +1,12 @@
 package category
 
 import (
-	models2 "kolesa/car-service/models"
-	"kolesa/models"
+	models2 "github.com/Nurbol05/kolesa/shared/models"
 )
 
 type CategoryRepository interface {
-	Create(category *models.Category) error
-	GetAll() ([]models.Category, error)
+	Create(category *models2.Category) error
+	GetAll() ([]models2.Category, error)
 	Update(id int, newName string) error
 	Delete(id int) error
 	GetCarsByCategoryID(categoryID int) ([]models2.Car, error)
@@ -20,11 +19,11 @@ func NewCategoryService(repo CategoryRepository) *CategoryService {
 	return &CategoryService{repo}
 }
 
-func (s *CategoryService) Create(category *models.Category) error {
+func (s *CategoryService) Create(category *models2.Category) error {
 	return s.repo.Create(category)
 }
 
-func (s *CategoryService) GetAll() ([]models.Category, error) {
+func (s *CategoryService) GetAll() ([]models2.Category, error) {
 	return s.repo.GetAll()
 }
 

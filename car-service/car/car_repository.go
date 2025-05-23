@@ -1,8 +1,8 @@
 package car
 
 import (
+	"github.com/Nurbol05/kolesa/shared/models"
 	"gorm.io/gorm"
-	"kolesa/car-service/models"
 )
 
 type CarRepositoryImpl struct {

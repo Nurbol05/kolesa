@@ -1,9 +1,9 @@
 package car_test
 
 import (
-	car2 "kolesa/car-service/car"
-	"kolesa/car-service/models"
-	"kolesa/database"
+	car2 "github.com/Nurbol05/kolesa/car-service/car"
+	"github.com/Nurbol05/kolesa/database"
+	"github.com/Nurbol05/kolesa/shared/models"
 	"os"
 	"testing"
 
@@ -18,7 +18,7 @@ func setupTestDB(t *testing.T) {
 	_ = os.Setenv("DB_USER", "postgres")
 	_ = os.Setenv("DB_PASSWORD", "postgres")
 	_ = os.Setenv("DB_HOST", "localhost")
-	_ = os.Setenv("DB_PORT", "5432")
+	_ = os.Setenv("DB_PORT", "5433")
 	_ = os.Setenv("DB_NAME", "kolesa_test")
 
 	db, err := database.ConnectPostgres()

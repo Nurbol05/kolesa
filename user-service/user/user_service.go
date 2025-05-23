@@ -2,9 +2,9 @@ package user
 
 import (
 	"errors"
+	"github.com/Nurbol05/kolesa/shared/models"
 	"github.com/golang-jwt/jwt/v4"
 	"golang.org/x/crypto/bcrypt"
-	"kolesa/user-service/models"
 	"os"
 	"time"
 )

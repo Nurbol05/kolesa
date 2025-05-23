@@ -2,8 +2,8 @@ package user
 
 import (
 	"errors"
+	"github.com/Nurbol05/kolesa/shared/models"
 	"gorm.io/gorm"
-	"kolesa/user-service/models"
 )
 
 type UserRepositoryImpl struct {

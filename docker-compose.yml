@@ -60,6 +60,47 @@ services:
         condition: service_healthy
     restart: always
 
+  user-service:
+    build:
+      context: .
+      dockerfile: user-service/Dockerfile
+    container_name: kolesa_user_service
+    ports:
+      - "8081:8081"
+    env_file:
+      - ./user-service/.env
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: kolesa
+      JWT_SECRET: "NURBOL"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: always
+
+  car-service:
+    build:
+      context: .
+      dockerfile: car-service/Dockerfile
+    container_name: kolesa_car_service
+    ports:
+      - "8082:8082"
+    env_file:
+      - ./car-service/.env
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: kolesa
+      JWT_SECRET: "NURBOL"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: always
 
 volumes:
   postgres_data:
